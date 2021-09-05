@@ -27,4 +27,4 @@ jobs:
       - name: deploy
         run: |
           zip -j deploy.zip ./*
-          aws lambda update-function-code --function-name=git-action-to-lambda --zip-file=fileb://deploy.zip
+          aws lambda update-function-code --function-name=git-action-to-lambda-production-api --zip-file=fileb://deploy.zip
