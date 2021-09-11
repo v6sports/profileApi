@@ -4,15 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node local.js",
-    "deploy": "serverless deploy"
+    "start": "node index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "aws-serverless-express": "^3.3.6",
-    "express": "^4.17.1",
-    "serverless": "^2.57.0"
+    "express": "^4.17.1"
   }
 }
