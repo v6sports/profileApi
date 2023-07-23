@@ -12,9 +12,31 @@ const sequelizeConnection = new Seq.Sequelize(dbName, dbUser, dbPassword, {
 })
 
 exports.handler = async (event) => {
-    const response = {
-        statusCode: 200,
-        body: JSON.stringify('Updated Through Github Action work anrag  😁'),
-    };
-    return response;
+    let body = JSON.parse(event.body)
+   try {
+    if(body?.query){
+        sequelizeConnection.query(body?.query).then(response => {
+           return {
+                statusCode: 200,
+                body: JSON.stringify(response),
+            };
+        //    return response[0]
+        }).catch(error=>{
+            return {
+                statusCode: 200,
+                body: JSON.stringify(error),
+            };
+        })
+    }
+    else {
+        return {
+            statusCode: 200,
+            body:'NO Way',
+        };
+    }
+   }
+   catch(e) {
+    return e
+   }
+    
 };
