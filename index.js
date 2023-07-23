@@ -12,22 +12,9 @@ const sequelizeConnection = new Seq.Sequelize(dbName, dbUser, dbPassword, {
 })
 
 exports.handler = async (event) => {
-    let body = JSON.parse(event.body)
-   try {
-    if(body?.query){
-        sequelizeConnection.query(body?.query).then(response => {
-          
-           return response[0]
-        }).catch(error=>{
-            return (error)
-        })
-    }
-    else {
-        return ({message:"No Query Passed"})
-    }
-   }
-   catch(e) {
-    return e
-   }
-    
+    const response = {
+        statusCode: 200,
+        body: JSON.stringify('Updated Through Github Action work anrag  😁'),
+    };
+    return response;
 };
