@@ -16,7 +16,7 @@ const sequelizeConnection = new Seq.Sequelize(dbName, dbUser, dbPassword, {
     dialect: dbDriver
 })
 
-app.post("/", function (req, res) {
+app.post("/", function (req, res,next) {
     let body = JSON.parse(req.body)
     try {
         if (req?.body?.query) {

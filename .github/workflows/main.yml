@@ -5,26 +5,30 @@ on:
     branches:
     - master
 
+
 jobs:
-  deploy_lambda:
+  deploy_source:
+    name: deploy lambda from source
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - name: checkout source code
+        uses: actions/checkout@v3
+      - name: default deploy
+        uses: appleboy/lambda-action@v0.1.9
         with:
-          node-version: '16'
-      - name: Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1
-      - name: npm install
-        env:
-          CI: true
-        run: |
-          yarn install
-      - name: deploy
-        run: |
-          zip -r deploy.zip .
-          aws lambda update-function-code --function-name=profileApi --zip-file=fileb://deploy.zip
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws_region: ${{ secrets.AWS_REGION }}
+          functions:
+            app: # Function named "app"
+            handler: app.server # Reference the exported "server" method from the "AppJS" file
+            events: # lambda functions are triggered by events
+              - http: #event trigger for the root route of an API Gateway HTTP  "/"
+                  path: /
+                  method: ANY # Any HTTP method is excepted
+                  cors: true # CORS enabler
+              - http: #
+                  path: /{proxy+}
+                  method: ANY # Accept any HTTP method
+                  cors: true # Enable CORS
+          
