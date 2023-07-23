@@ -11,17 +11,17 @@ const sequelizeConnection = new Sequelize(dbName, dbUser, dbPassword, {
 })
 
 exports.handler = async (event) => {
-    let { req, qes } = event;
-    let {query} = req.body;
+    let body = JSON.parse(event.body)
+    let {query} = body;
     if(query){
         sequelizeConnection.query(query).then(response => {
           
-            res.status(200).jsonp((response[0]))
+           return response[0]
         }).catch(error=>{
-            res.status(500).jsonp(error)
+            return (error)
         })
     }
     else {
-        res.status(200).jsonp({message:"No Query Passed"})
+        return ({message:"No Query Passed"})
     }
 };
