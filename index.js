@@ -18,13 +18,13 @@ exports.handler = async (event) => {
         sequelizeConnection.query(body?.query).then(response => {
            return {
                 statusCode: 200,
-                body: JSON.stringify(response),
+                body: 'db',
             };
         //    return response[0]
         }).catch(error=>{
             return {
                 statusCode: 200,
-                body: JSON.stringify(error),
+                body: 'error',
             };
         })
     }
