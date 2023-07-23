@@ -23,7 +23,7 @@ jobs:
         env:
           CI: true
         run: |
-          npm ci
+          yarn install
       - name: deploy
         run: |
           zip -j deploy.zip ./*
